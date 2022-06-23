@@ -1,6 +1,14 @@
 <?php
 
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\GradeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\EasterEggController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,21 +21,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/posts/{post}', function ($post) {
-    $posts = [
-        'my-first-post' => 'Hello, this is my first blog post!',
-        'my-second-post' => 'Now I am getting the hang of this blogging thing.'
-    ];
+Route::get('/', [WelcomeController::class, 'show']);
 
-    if (!array_key_exists($post, $posts)) {
-        abort(404, 'Sorry, that post was not found.');
-    }
+Route::get('/blog', [BlogController::class, 'show']);
 
-    return view('post', [
-        'post' => $posts[$post]
-    ]);
-});
+Route::get('/easteregg', [EasterEggController::class, 'show']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/dashboard', [DashboardController::class, 'show']);
+Route::get('/dashboard', [GradeController::class, 'show']);
+
+Route::get('/faq', [FaqController::class, 'index']);
+Route::post('/faq', [FaqController::class, 'store']);
+Route::get('/faq/create', [FaqController::class, 'create']);
+Route::get('/faq/{faq}', [FaqController::class, 'show'])->name('faq.show');
+Route::get('/faq/{faq}/edit', [FaqController::class, 'edit']);
+Route::put('/faq/{faq}', [FaqController::class, 'update']);
+Route::delete('/faq/{faq}', [FaqController::class, 'delete']);
+
+Route::get('/profile', [ProfileController::class, 'show']);
+Route::get('/grade', [GradeController::class, 'show']);
+Route::get('/kitsu', [ApiController::class, 'show']);
+
+
+
+
+
+
+
+
